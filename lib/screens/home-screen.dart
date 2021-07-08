@@ -96,6 +96,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+            //* Events list
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -115,7 +116,114 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(width: 30),
                 ],
               ),
-            )
+            ),
+            SizedBox(height: 50),
+            Flexible(
+              fit: FlexFit.tight,
+              child: Stack(
+                children: [
+                  //* Popular Events Card
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.78,
+                    height: double.infinity,
+                    padding: EdgeInsets.fromLTRB(30, 36, 0, 0),
+                    decoration: BoxDecoration(
+                      color: Color(0xff212529),
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(50),
+                      ),
+                    ),
+                    child: InkWell(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'MOST POPULAR',
+                            style: GoogleFonts.inter(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Icon(
+                            Icons.arrow_upward_rounded,
+                            color: Colors.white54,
+                            size: 25,
+                          )
+                        ],
+                      ),
+                      onTap: () {
+                        print('Tapped');
+                      },
+                    ),
+                  ),
+                  //* Newest Events Card
+                  Container(
+                    height: double.infinity,
+                    margin: EdgeInsets.fromLTRB(80, 100, 0, 0),
+                    padding: EdgeInsets.fromLTRB(42, 36, 0, 0),
+                    decoration: BoxDecoration(
+                      color: Color(0xff3f37c9),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50),
+                      ),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'NEWEST EVENTS',
+                          style: GoogleFonts.inter(
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Icon(
+                          Icons.arrow_upward_rounded,
+                          color: Colors.white54,
+                          size: 25,
+                        )
+                      ],
+                    ),
+                  ),
+                  //* Upcoming Events
+                  Container(
+                    height: double.infinity,
+                    margin: EdgeInsets.fromLTRB(0, 200, 0, 0),
+                    padding: EdgeInsets.fromLTRB(30, 36, 0, 0),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    decoration: BoxDecoration(
+                      color: Color(0xffdee2ff),
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(50),
+                      ),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'UPCOMINGS',
+                          style: GoogleFonts.inter(
+                            color: Color(0xff212529),
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Icon(
+                          Icons.arrow_upward_rounded,
+                          color: Colors.black38,
+                          size: 25,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
