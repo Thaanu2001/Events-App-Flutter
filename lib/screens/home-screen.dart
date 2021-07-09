@@ -245,43 +245,43 @@ class _HomeScreenState extends State<HomeScreen> {
                       }),
                   //* Upcoming Events
                   ValueListenableBuilder<double>(
-                      valueListenable: bottomCardMargin2,
-                      builder: (BuildContext context, double bottomCardMargin2,
-                          child) {
-                        return AnimatedContainer(
-                          duration: Duration(milliseconds: 200),
-                          height: double.infinity,
-                          margin:
-                              EdgeInsets.fromLTRB(0, bottomCardMargin2, 0, 0),
-                          padding: EdgeInsets.fromLTRB(30, 36, 0, 0),
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          decoration: BoxDecoration(
-                            color: Color(0xffdee2ff),
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(50),
-                            ),
+                    valueListenable: bottomCardMargin2,
+                    builder: (BuildContext context, double bottomCardMargin2,
+                        child) {
+                      return AnimatedContainer(
+                        duration: Duration(milliseconds: 200),
+                        height: double.infinity,
+                        margin: EdgeInsets.fromLTRB(0, bottomCardMargin2, 0, 0),
+                        padding: EdgeInsets.fromLTRB(30, 36, 0, 0),
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        decoration: BoxDecoration(
+                          color: Color(0xffdee2ff),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(50),
                           ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'UPCOMINGS',
-                                style: GoogleFonts.inter(
-                                  color: Color(0xff212529),
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'UPCOMINGS',
+                              style: GoogleFonts.inter(
+                                color: Color(0xff212529),
+                                fontSize: 25,
+                                fontWeight: FontWeight.w700,
                               ),
-                              SizedBox(width: 10),
-                              Icon(
-                                Icons.arrow_upward_rounded,
-                                color: Colors.black38,
-                                size: 25,
-                              )
-                            ],
-                          ),
-                        );
-                      }),
+                            ),
+                            SizedBox(width: 10),
+                            Icon(
+                              Icons.arrow_upward_rounded,
+                              color: Colors.black38,
+                              size: 25,
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

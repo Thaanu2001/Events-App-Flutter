@@ -1,8 +1,10 @@
+import 'package:events_app_flutter/screens/event-inner-screen.dart';
 import 'package:events_app_flutter/screens/home-screen.dart';
 import 'package:events_app_flutter/widgets/animated-widgets.dart';
 import 'package:events_app_flutter/widgets/full-event-card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class PopularEventsScreen extends StatelessWidget {
   const PopularEventsScreen({Key? key}) : super(key: key);
@@ -65,11 +67,27 @@ class PopularEventsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   AnimatedWidgets(
-                    child: FullEventCard(
-                      imageLocation: 'lib/assets/event-1.jpg',
-                      eventName: 'Live in Concert',
-                      eventDetails: '28.07.2021 • LKR 12,000',
-                      category: 'Musical',
+                    child: InkWell(
+                      child: FullEventCard(
+                        imageLocation: 'lib/assets/event-4.jpg',
+                        eventName: 'Live in Concert',
+                        eventDetails: '28.07.2021 • LKR 12,000',
+                        category: 'Musical',
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return ListenableProvider(
+                                create: (context) => animation,
+                                child: EventInnerScreen(),
+                              );
+                            },
+                            transitionDuration: Duration(milliseconds: 300),
+                          ),
+                        );
+                      },
                     ),
                     delay: 300,
                   ),
@@ -97,7 +115,7 @@ class PopularEventsScreen extends StatelessWidget {
                   AnimatedWidgets(
                     child: FullEventCard(
                       imageLocation: 'lib/assets/fav-event-2.jpg',
-                      eventName: 'Live in Concert',
+                      eventName: 'Musical Show',
                       eventDetails: '28.07.2021 • LKR 8,000',
                       category: 'Musical',
                     ),

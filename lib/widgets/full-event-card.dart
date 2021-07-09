@@ -17,16 +17,21 @@ class FullEventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        //* Favourite event image
+        //* Event image
         Container(
           width: double.infinity,
           height: 220,
           margin: EdgeInsets.only(top: 12),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.asset(
-              this.imageLocation,
-              fit: BoxFit.cover,
+            child: Hero(
+              tag: eventName,
+              child: Image.asset(
+                this.imageLocation,
+                fit: BoxFit.cover,
+                // height: 300,
+                // alignment: Alignment.enter,
+              ),
             ),
           ),
         ),
