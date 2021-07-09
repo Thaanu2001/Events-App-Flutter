@@ -1,11 +1,26 @@
 import 'dart:ui';
 
+import 'package:events_app_flutter/screens/popular-events-screen.dart';
 import 'package:events_app_flutter/widgets/event-card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+ValueNotifier<double> bottomCardMargin1 = ValueNotifier<double>(100);
+ValueNotifier<double> bottomCardMargin2 = ValueNotifier<double>(200);
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,14 +119,20 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(width: 30),
                   EventCard(
                     imageLocation: 'lib/assets/fav-event-2.jpg',
-                    eventName: 'Musical Show',
-                    eventDetails: '28.07.2021 • LKR 6,000',
+                    eventName: 'Live in Concert',
+                    eventDetails: '28.07.2021 • LKR 8,000',
                   ),
                   SizedBox(width: 20),
                   EventCard(
                     imageLocation: 'lib/assets/fav-event-1.jpg',
                     eventName: 'DJ Night',
                     eventDetails: '12.07.2021 • LKR 4,000',
+                  ),
+                  SizedBox(width: 20),
+                  EventCard(
+                    imageLocation: 'lib/assets/event-3.jpg',
+                    eventName: 'DJ Night',
+                    eventDetails: '12.08.2021 • LKR 6,000',
                   ),
                   SizedBox(width: 30),
                 ],
@@ -123,104 +144,144 @@ class HomeScreen extends StatelessWidget {
               child: Stack(
                 children: [
                   //* Popular Events Card
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.78,
-                    height: double.infinity,
-                    padding: EdgeInsets.fromLTRB(30, 36, 0, 0),
-                    decoration: BoxDecoration(
-                      color: Color(0xff212529),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(50),
-                      ),
-                    ),
-                    child: InkWell(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'MOST POPULAR',
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Icon(
-                            Icons.arrow_upward_rounded,
-                            color: Colors.white54,
-                            size: 25,
-                          )
-                        ],
-                      ),
-                      onTap: () {
+                  Hero(
+                    tag: 'card',
+                    child: GestureDetector(
+                      onHorizontalDragStart: (details) {
                         print('Tapped');
+
+                        setState(() {
+                          bottomCardMargin1.value = 500;
+                          bottomCardMargin2.value = 500;
+                        });
+
+                        Future.delayed(Duration(milliseconds: 100), () {
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) {
+                                return ListenableProvider(
+                                  create: (context) => animation,
+                                  child: PopularEventsScreen(),
+                                );
+                              },
+                              transitionDuration: Duration(milliseconds: 400),
+                            ),
+                          );
+                        });
                       },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.78,
+                        height: double.infinity,
+                        padding: EdgeInsets.fromLTRB(30, 36, 0, 0),
+                        decoration: BoxDecoration(
+                          color: Color(0xff212529),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(50),
+                          ),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Material(
+                              color: Colors.transparent,
+                              child: Text(
+                                'MOST POPULAR',
+                                style: GoogleFonts.inter(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Icon(
+                              Icons.arrow_upward_rounded,
+                              color: Colors.white54,
+                              size: 25,
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                   //* Newest Events Card
-                  Container(
-                    height: double.infinity,
-                    margin: EdgeInsets.fromLTRB(80, 100, 0, 0),
-                    padding: EdgeInsets.fromLTRB(42, 36, 0, 0),
-                    decoration: BoxDecoration(
-                      color: Color(0xff3f37c9),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(50),
-                      ),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'NEWEST EVENTS',
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
+                  ValueListenableBuilder<double>(
+                      valueListenable: bottomCardMargin1,
+                      builder: (BuildContext context, double bottomCardMargin1,
+                          child) {
+                        return AnimatedContainer(
+                          duration: Duration(milliseconds: 200),
+                          height: double.infinity,
+                          margin:
+                              EdgeInsets.fromLTRB(80, bottomCardMargin1, 0, 0),
+                          padding: EdgeInsets.fromLTRB(42, 36, 0, 0),
+                          decoration: BoxDecoration(
+                            color: Color(0xff3f37c9),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 10),
-                        Icon(
-                          Icons.arrow_upward_rounded,
-                          color: Colors.white54,
-                          size: 25,
-                        )
-                      ],
-                    ),
-                  ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'NEWEST EVENTS',
+                                style: GoogleFonts.inter(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Icon(
+                                Icons.arrow_upward_rounded,
+                                color: Colors.white54,
+                                size: 25,
+                              )
+                            ],
+                          ),
+                        );
+                      }),
                   //* Upcoming Events
-                  Container(
-                    height: double.infinity,
-                    margin: EdgeInsets.fromLTRB(0, 200, 0, 0),
-                    padding: EdgeInsets.fromLTRB(30, 36, 0, 0),
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    decoration: BoxDecoration(
-                      color: Color(0xffdee2ff),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(50),
-                      ),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'UPCOMINGS',
-                          style: GoogleFonts.inter(
-                            color: Color(0xff212529),
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
+                  ValueListenableBuilder<double>(
+                      valueListenable: bottomCardMargin2,
+                      builder: (BuildContext context, double bottomCardMargin2,
+                          child) {
+                        return AnimatedContainer(
+                          duration: Duration(milliseconds: 200),
+                          height: double.infinity,
+                          margin:
+                              EdgeInsets.fromLTRB(0, bottomCardMargin2, 0, 0),
+                          padding: EdgeInsets.fromLTRB(30, 36, 0, 0),
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          decoration: BoxDecoration(
+                            color: Color(0xffdee2ff),
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(50),
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 10),
-                        Icon(
-                          Icons.arrow_upward_rounded,
-                          color: Colors.black38,
-                          size: 25,
-                        )
-                      ],
-                    ),
-                  ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'UPCOMINGS',
+                                style: GoogleFonts.inter(
+                                  color: Color(0xff212529),
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Icon(
+                                Icons.arrow_upward_rounded,
+                                color: Colors.black38,
+                                size: 25,
+                              )
+                            ],
+                          ),
+                        );
+                      }),
                 ],
               ),
             ),
