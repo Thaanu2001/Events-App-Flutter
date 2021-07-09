@@ -1,20 +1,21 @@
-import 'package:events_app_flutter/screens/event-purchase-screen.dart';
+import 'package:events_app_flutter/widgets/animated-widgets.dart';
 import 'package:events_app_flutter/widgets/detail-card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class EventDetailsScreen extends StatefulWidget {
-  const EventDetailsScreen({Key? key}) : super(key: key);
+class EventPurchaseScreen extends StatefulWidget {
+  const EventPurchaseScreen({Key? key}) : super(key: key);
 
   @override
-  _EventDetailsScreenState createState() => _EventDetailsScreenState();
+  _EventPurchaseScreenState createState() => _EventPurchaseScreenState();
 }
 
-class _EventDetailsScreenState extends State<EventDetailsScreen> {
-  List<double> dateCard = [80, 600, 0, 0];
-  List<double> detailsCard = [0, 700, 0, 0];
+class _EventPurchaseScreenState extends State<EventPurchaseScreen> {
+  List<double> dateCard = [0, 350, 0, 0];
+  List<double> detailsCard = [0, 450, 0, 0];
   bool animationStarted = false;
   bool animationTwoStarted = false;
+  // List<double> ticketCard = [500, 900];
 
   @override
   void initState() {
@@ -25,8 +26,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   cardAnimation() async {
     await Future.delayed(const Duration(milliseconds: 0), () {
       setState(() {
-        dateCard = [0, 350, MediaQuery.of(context).size.width - 42];
-        detailsCard = [MediaQuery.of(context).size.width, 450];
+        // dateCard = [0, 350, MediaQuery.of(context).size.width - 42];
+        // detailsCard = [MediaQuery.of(context).size.width, 450];
         animationStarted = true;
       });
     });
@@ -48,52 +49,17 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
             AnimatedContainer(
               duration: Duration(milliseconds: 200),
               width: MediaQuery.of(context).size.width,
-              height: (!animationStarted) ? 700 : 400,
+              height: (!animationStarted) ? 400 : 400,
               child: Image.asset(
                 'lib/assets/event-4.jpg',
                 fit: BoxFit.cover,
                 height: 700,
               ),
             ),
-            AnimatedOpacity(
-              duration: Duration(milliseconds: 200),
-              opacity: (!animationStarted) ? 1 : 0,
-              child: AnimatedContainer(
-                duration: Duration(milliseconds: 200),
-                padding: EdgeInsets.fromLTRB(
-                    30, (!animationStarted) ? 65 : 0, 30, 0),
-                child: InkWell(
-                  child: Icon(
-                    Icons.arrow_back_rounded,
-                    color: Colors.white,
-                    size: 25,
-                  ),
-                  onTap: () => Navigator.pop(context),
-                ),
-              ),
-            ),
-            AnimatedOpacity(
-              duration: Duration(milliseconds: 200),
-              opacity: (!animationStarted) ? 1 : 0,
-              child: AnimatedContainer(
-                duration: Duration(milliseconds: 200),
-                padding: EdgeInsets.fromLTRB(
-                    30, (!animationStarted) ? 120 : 0, 30, 0),
-                child: Text(
-                  'ARIANA GRANDE,\nLIVE IN CONCERT',
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontSize: 36,
-                    fontWeight: FontWeight.w800,
-                    height: 1.4,
-                  ),
-                ),
-              ),
-            ),
             //* Header Card
             AnimatedContainer(
               duration: Duration(milliseconds: 200),
-              height: (!animationStarted) ? 0 : 100,
+              height: 100,
               margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
               padding: EdgeInsets.fromLTRB(30, 55, 0, 0),
               width: MediaQuery.of(context).size.width,
@@ -145,7 +111,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                 scrollDirection: Axis.horizontal,
                 child: Container(
                   width: (dateCard[2] == 0)
-                      ? MediaQuery.of(context).size.width - 122
+                      ? MediaQuery.of(context).size.width - 42
                       : dateCard[2],
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,7 +194,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               margin: EdgeInsets.fromLTRB(0, detailsCard[1], 0, 0),
               padding: EdgeInsets.fromLTRB(40, 30, 0, 0),
               width: (detailsCard[0] == 0)
-                  ? MediaQuery.of(context).size.width * 0.7
+                  ? MediaQuery.of(context).size.width
                   : detailsCard[0],
               decoration: BoxDecoration(
                 color: Color(0xff4361ee),
@@ -236,84 +202,44 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   topRight: Radius.circular(50),
                 ),
               ),
-              child: GestureDetector(
-                child: ListView(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AnimatedCrossFade(
-                          firstChild: Text(
-                            'More Details',
-                            style: GoogleFonts.inter(
-                              color: Color(0xffdee2ff),
-                              fontSize: 25,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          secondChild: Text(
-                            'Event Details',
-                            style: GoogleFonts.inter(
-                              color: Color(0xffdee2ff),
-                              fontSize: 25,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          duration: Duration(milliseconds: 200),
-                          crossFadeState: !animationStarted
-                              ? CrossFadeState.showFirst
-                              : CrossFadeState.showSecond,
-                        ),
-                        SizedBox(width: 10),
-                        AnimatedOpacity(
-                          duration: Duration(milliseconds: 200),
-                          opacity: (!animationStarted) ? 1 : 0,
-                          child: Icon(
-                            Icons.arrow_upward_rounded,
-                            color: Color(0x88dee2ff),
-                            size: 25,
-                          ),
-                        )
-                      ],
-                    ),
-                    AnimatedOpacity(
-                      duration: Duration(milliseconds: 200),
-                      opacity: (!animationTwoStarted) ? 0 : 1,
-                      child: Container(
-                        padding: EdgeInsets.only(top: 10, right: 30),
-                        child: Column(
-                          children: [
-                            Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                              style: TextStyle(
-                                color: Color(0xffdee2ff),
-                                fontSize: 17,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            DetailCard(),
-                            SizedBox(height: 20),
-                            DetailCard(),
-                          ],
+              child: ListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Event Details',
+                        style: GoogleFonts.inter(
+                          color: Color(0xffdee2ff),
+                          fontSize: 25,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                    )
-                  ],
-                ),
-                onHorizontalDragStart: (details) {
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          EventPurchaseScreen(),
-                      transitionDuration: Duration(seconds: 0),
+                    ],
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: 10, right: 30),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                          style: TextStyle(
+                            color: Color(0xffdee2ff),
+                            fontSize: 17,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        DetailCard(),
+                        SizedBox(height: 20),
+                        DetailCard(),
+                      ],
                     ),
-                  );
-                },
+                  )
+                ],
               ),
             ),
             //* Ticket Price

@@ -18,10 +18,10 @@ class _EventInnerScreenState extends State<EventInnerScreen> {
   @override
   void initState() {
     super.initState();
-    productImage();
+    bottomCardAnimation();
   }
 
-  productImage() async {
+  bottomCardAnimation() async {
     await Future.delayed(const Duration(milliseconds: 200), () {
       setState(() {
         dateCard = [80, 600];
@@ -188,7 +188,7 @@ class _EventInnerScreenState extends State<EventInnerScreen> {
               padding: EdgeInsets.fromLTRB(40, 30, 0, 0),
               width: detailsCard[0],
               decoration: BoxDecoration(
-                color: Color(0xff3f37c9),
+                color: Color(0xff4361ee),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(50),
                 ),
@@ -216,6 +216,7 @@ class _EventInnerScreenState extends State<EventInnerScreen> {
                 ),
               ),
             ),
+            //* Price Card
             AnimatedContainer(
               duration: Duration(milliseconds: 200),
               height: double.infinity,
@@ -230,7 +231,7 @@ class _EventInnerScreenState extends State<EventInnerScreen> {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Container(
-                  width: MediaQuery.of(context).size.width - 192,
+                  width: MediaQuery.of(context).size.width - 195,
                   child: Text(
                     'BUY • LKR 12,000',
                     style: GoogleFonts.inter(
