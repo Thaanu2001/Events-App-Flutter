@@ -1,3 +1,4 @@
+import 'package:events_app_flutter/screens/event-details-screen.dart';
 import 'package:events_app_flutter/widgets/animated-widgets.dart';
 import 'package:events_app_flutter/widgets/detail-card.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ class _EventPurchaseScreenState extends State<EventPurchaseScreen> {
   List<double> dateCard = [0, 350, 0, 0];
   List<double> detailsCard = [0, 450, 0, 0];
   bool animationStarted = false;
-  bool animationTwoStarted = false;
   // List<double> ticketCard = [500, 900];
 
   @override
@@ -26,14 +26,9 @@ class _EventPurchaseScreenState extends State<EventPurchaseScreen> {
   cardAnimation() async {
     await Future.delayed(const Duration(milliseconds: 0), () {
       setState(() {
-        // dateCard = [0, 350, MediaQuery.of(context).size.width - 42];
-        // detailsCard = [MediaQuery.of(context).size.width, 450];
+        dateCard = [0, 0, MediaQuery.of(context).size.width - 42];
+        detailsCard = [MediaQuery.of(context).size.width, 0, 120];
         animationStarted = true;
-      });
-    });
-    await Future.delayed(const Duration(milliseconds: 200), () {
-      setState(() {
-        animationTwoStarted = true;
       });
     });
   }
@@ -49,50 +44,11 @@ class _EventPurchaseScreenState extends State<EventPurchaseScreen> {
             AnimatedContainer(
               duration: Duration(milliseconds: 200),
               width: MediaQuery.of(context).size.width,
-              height: (!animationStarted) ? 400 : 400,
+              height: (!animationStarted) ? 400 : 0,
               child: Image.asset(
                 'lib/assets/event-4.jpg',
                 fit: BoxFit.cover,
                 height: 700,
-              ),
-            ),
-            //* Header Card
-            AnimatedContainer(
-              duration: Duration(milliseconds: 200),
-              height: 100,
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              padding: EdgeInsets.fromLTRB(30, 55, 0, 0),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Color(0xffdee2ff),
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(50),
-                ),
-              ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      child: Icon(
-                        Icons.arrow_back_rounded,
-                        color: Color(0xaa3f37c9),
-                        size: 20,
-                      ),
-                      onTap: () => Navigator.pop(context),
-                    ),
-                    SizedBox(width: 20),
-                    Text(
-                      'ARIANA GRANDE - LIVE IN CONCERT',
-                      style: GoogleFonts.inter(
-                        color: Color(0xff3f37c9),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ],
-                ),
               ),
             ),
             //* Event Date Card
@@ -192,7 +148,8 @@ class _EventPurchaseScreenState extends State<EventPurchaseScreen> {
               duration: Duration(milliseconds: 200),
               height: double.infinity,
               margin: EdgeInsets.fromLTRB(0, detailsCard[1], 0, 0),
-              padding: EdgeInsets.fromLTRB(40, 30, 0, 0),
+              padding: EdgeInsets.fromLTRB(
+                  40, (detailsCard[2] == 0) ? 30 : detailsCard[2], 0, 0),
               width: (detailsCard[0] == 0)
                   ? MediaQuery.of(context).size.width
                   : detailsCard[0],
@@ -202,70 +159,128 @@ class _EventPurchaseScreenState extends State<EventPurchaseScreen> {
                   topRight: Radius.circular(50),
                 ),
               ),
-              child: ListView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.zero,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Event Details',
-                        style: GoogleFonts.inter(
-                          color: Color(0xffdee2ff),
-                          fontSize: 25,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(top: 10, right: 30),
-                    child: Column(
+              child: GestureDetector(
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                          style: TextStyle(
+                          'Event Details',
+                          style: GoogleFonts.inter(
                             color: Color(0xffdee2ff),
-                            fontSize: 17,
-                            fontWeight: FontWeight.w300,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-                        SizedBox(height: 20),
-                        DetailCard(),
-                        SizedBox(height: 20),
-                        DetailCard(),
                       ],
                     ),
-                  )
-                ],
+                    Container(
+                      padding: EdgeInsets.only(top: 10, right: 30),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                            style: TextStyle(
+                              color: Color(0xffdee2ff),
+                              fontSize: 17,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          DetailCard(),
+                          SizedBox(height: 20),
+                          DetailCard(),
+                          SizedBox(height: 20),
+                          DetailCard(),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                onPanUpdate: (details) {
+                  if (details.delta.dy > 0) {
+                    setState(() {
+                      animationStarted = false;
+                      dateCard = [0, 350, 0, 0];
+                      detailsCard = [0, 450, 0, 0];
+                      Navigator.pop(context);
+                    });
+                  }
+                },
               ),
             ),
             //* Ticket Price
             AnimatedContainer(
               duration: Duration(milliseconds: 200),
               height: double.infinity,
-              margin: EdgeInsets.fromLTRB(150, 780, 0, 0),
-              padding: EdgeInsets.fromLTRB(45, 40, 0, 0),
+              width: double.infinity,
+              margin: EdgeInsets.fromLTRB(
+                  (!animationStarted) ? 150 : 40,
+                  (!animationStarted) ? 780 : 760,
+                  (!animationStarted) ? 0 : 30,
+                  (!animationStarted) ? 0 : 70),
+              padding: EdgeInsets.fromLTRB((!animationStarted) ? 45 : 0,
+                  (!animationStarted) ? 40 : 0, 0, 0),
+              decoration: BoxDecoration(
+                color: Color(0xffdee2ff),
+                borderRadius: (!animationStarted)
+                    ? BorderRadius.only(topLeft: Radius.circular(50))
+                    : BorderRadius.circular(50),
+              ),
+              child: AnimatedAlign(
+                duration: Duration(milliseconds: 200),
+                alignment:
+                    (!animationStarted) ? Alignment.topLeft : Alignment.center,
+                child: Text(
+                  'BUY • LKR 12,000',
+                  style: GoogleFonts.inter(
+                    color: Color(0xff3f37c9),
+                    fontSize: 25,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+            ),
+            //* Header Card
+            AnimatedContainer(
+              duration: Duration(milliseconds: 200),
+              height: 100,
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              padding: EdgeInsets.fromLTRB(30, 55, 0, 0),
+              width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: Color(0xffdee2ff),
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50),
+                  bottomRight: Radius.circular(50),
                 ),
               ),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Container(
-                  width: MediaQuery.of(context).size.width - 195,
-                  child: Text(
-                    'BUY • LKR 12,000',
-                    style: GoogleFonts.inter(
-                      color: Color(0xff3f37c9),
-                      fontSize: 25,
-                      fontWeight: FontWeight.w800,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      child: Icon(
+                        Icons.arrow_back_rounded,
+                        color: Color(0xaa3f37c9),
+                        size: 20,
+                      ),
+                      onTap: () => Navigator.pop(context),
                     ),
-                  ),
+                    SizedBox(width: 20),
+                    Text(
+                      'ARIANA GRANDE - LIVE IN CONCERT',
+                      style: GoogleFonts.inter(
+                        color: Color(0xff3f37c9),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

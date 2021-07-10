@@ -3,6 +3,8 @@ import 'package:events_app_flutter/widgets/detail-card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+bool throughEventPurchaseScreen = false;
+
 class EventDetailsScreen extends StatefulWidget {
   const EventDetailsScreen({Key? key}) : super(key: key);
 
@@ -28,6 +30,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         dateCard = [0, 350, MediaQuery.of(context).size.width - 42];
         detailsCard = [MediaQuery.of(context).size.width, 450];
         animationStarted = true;
+        if (throughEventPurchaseScreen) animationTwoStarted = true;
       });
     });
     await Future.delayed(const Duration(milliseconds: 200), () {
@@ -133,6 +136,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
             AnimatedContainer(
               duration: Duration(milliseconds: 200),
               height: double.infinity,
+              width: double.infinity,
               margin: EdgeInsets.fromLTRB(dateCard[0], dateCard[1], 0, 0),
               padding: EdgeInsets.fromLTRB(42, 32, 0, 0),
               decoration: BoxDecoration(
@@ -141,82 +145,95 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   topLeft: Radius.circular(50),
                 ),
               ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Container(
-                  width: (dateCard[2] == 0)
-                      ? MediaQuery.of(context).size.width - 122
-                      : dateCard[2],
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Date',
-                            style: TextStyle(
-                              color: Color(0xff879dff),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
+              child: GestureDetector(
+                onPanUpdate: (details) {
+                  if (details.delta.dy > 0) {
+                    setState(() {
+                      dateCard = [80, 600, 0, 0];
+                      detailsCard = [0, 700, 0, 0];
+                      animationStarted = false;
+                      animationTwoStarted = false;
+                    });
+                    Navigator.pop(context);
+                  }
+                },
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Container(
+                    width: (dateCard[2] == 0)
+                        ? MediaQuery.of(context).size.width - 122
+                        : dateCard[2],
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Date',
+                              style: TextStyle(
+                                color: Color(0xff879dff),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '28.07.2021',
-                            style: TextStyle(
-                                color: Color(0xffdee2ff),
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                height: 1.3),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'From',
-                            style: TextStyle(
-                              color: Color(0xff879dff),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
+                            Text(
+                              '28.07.2021',
+                              style: TextStyle(
+                                  color: Color(0xffdee2ff),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.3),
                             ),
-                          ),
-                          Text(
-                            '7.00PM',
-                            style: TextStyle(
-                                color: Color(0xffdee2ff),
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                height: 1.3),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'To',
-                            style: TextStyle(
-                              color: Color(0xff879dff),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
+                          ],
+                        ),
+                        SizedBox(width: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'From',
+                              style: TextStyle(
+                                color: Color(0xff879dff),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '11.00PM',
-                            style: TextStyle(
-                                color: Color(0xffdee2ff),
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                height: 1.3),
-                          ),
-                        ],
-                      ),
-                    ],
+                            Text(
+                              '7.00PM',
+                              style: TextStyle(
+                                  color: Color(0xffdee2ff),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.3),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'To',
+                              style: TextStyle(
+                                color: Color(0xff879dff),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              '11.00PM',
+                              style: TextStyle(
+                                  color: Color(0xffdee2ff),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.3),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -304,15 +321,25 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     )
                   ],
                 ),
-                onHorizontalDragStart: (details) {
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          EventPurchaseScreen(),
-                      transitionDuration: Duration(seconds: 0),
-                    ),
-                  );
+                onPanUpdate: (details) {
+                  if (!(details.delta.dy > 0)) {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            EventPurchaseScreen(),
+                        transitionDuration: Duration(seconds: 0),
+                      ),
+                    );
+                  } else {
+                    print('aa');
+                    // setState(() {
+                    //   dateCard = [80, 600, 0, 0];
+                    //   detailsCard = [0, 700, 0, 0];
+                    //   animationStarted = false;
+                    //   animationTwoStarted = false;
+                    // });
+                  }
                 },
               ),
             ),

@@ -58,7 +58,16 @@ class _EventInnerScreenState extends State<EventInnerScreen> {
                   ),
                   delay: 200,
                 ),
-                onTap: () => Navigator.pop(context),
+                onTap: () async {
+                  setState(() {
+                    dateCard = [500, 900];
+                    detailsCard = [0, 900];
+                    ticketCard = [500, 900];
+                  });
+                  await Future.delayed(const Duration(milliseconds: 200), () {
+                    Navigator.pop(context);
+                  });
+                },
               ),
             ),
             Container(
@@ -166,15 +175,17 @@ class _EventInnerScreenState extends State<EventInnerScreen> {
                         ],
                       ),
                     ),
-                    onHorizontalDragStart: (details) {
-                      Navigator.pushReplacement(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) =>
-                              EventDetailsScreen(),
-                          transitionDuration: Duration(seconds: 0),
-                        ),
-                      );
+                    onPanUpdate: (details) {
+                      if (!(details.delta.dy > 0)) {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                EventDetailsScreen(),
+                            transitionDuration: Duration(seconds: 0),
+                          ),
+                        );
+                      }
                     },
                   ),
                 ),

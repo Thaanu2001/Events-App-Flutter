@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+bool throughEventsScreen = false;
 ValueNotifier<double> bottomCardMargin1 = ValueNotifier<double>(100);
 ValueNotifier<double> bottomCardMargin2 = ValueNotifier<double>(200);
 
@@ -210,6 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       valueListenable: bottomCardMargin1,
                       builder: (BuildContext context, double bottomCardMargin1,
                           child) {
+                        print(throughEventsScreen);
                         return AnimatedContainer(
                           duration: Duration(milliseconds: 200),
                           height: double.infinity,
