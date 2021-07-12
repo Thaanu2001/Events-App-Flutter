@@ -196,7 +196,7 @@ class _EventInnerScreenState extends State<EventInnerScreen> {
               duration: Duration(milliseconds: 200),
               height: double.infinity,
               margin: EdgeInsets.fromLTRB(0, detailsCard[1], 0, 0),
-              padding: EdgeInsets.fromLTRB(40, 30, 0, 0),
+              padding: EdgeInsets.fromLTRB(30, 30, 0, 0),
               width: detailsCard[0],
               decoration: BoxDecoration(
                 color: Color(0xff4361ee),
@@ -210,7 +210,7 @@ class _EventInnerScreenState extends State<EventInnerScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'More Details',
+                      'Event Details',
                       style: GoogleFonts.inter(
                         color: Color(0xffdee2ff),
                         fontSize: 25,

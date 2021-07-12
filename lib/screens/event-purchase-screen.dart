@@ -15,6 +15,10 @@ class _EventPurchaseScreenState extends State<EventPurchaseScreen> {
   List<double> dateCard = [0, 350, 0, 0];
   List<double> detailsCard = [0, 450, 0, 0];
   bool animationStarted = false;
+  bool animationStarted2 = false;
+  bool animationStarted3 = false;
+  bool animationStarted4 = false;
+  bool animationStarted5 = false;
   // List<double> ticketCard = [500, 900];
 
   @override
@@ -29,6 +33,26 @@ class _EventPurchaseScreenState extends State<EventPurchaseScreen> {
         dateCard = [0, 0, MediaQuery.of(context).size.width - 42];
         detailsCard = [MediaQuery.of(context).size.width, 0, 120];
         animationStarted = true;
+      });
+    });
+    await Future.delayed(const Duration(milliseconds: 80), () {
+      setState(() {
+        animationStarted2 = true;
+      });
+    });
+    await Future.delayed(const Duration(milliseconds: 50), () {
+      setState(() {
+        animationStarted3 = true;
+      });
+    });
+    await Future.delayed(const Duration(milliseconds: 50), () {
+      setState(() {
+        animationStarted4 = true;
+      });
+    });
+    await Future.delayed(const Duration(milliseconds: 50), () {
+      setState(() {
+        animationStarted5 = true;
       });
     });
   }
@@ -144,45 +168,53 @@ class _EventPurchaseScreenState extends State<EventPurchaseScreen> {
               ),
             ),
             //* More Details Card
-            AnimatedContainer(
-              duration: Duration(milliseconds: 200),
-              height: double.infinity,
-              margin: EdgeInsets.fromLTRB(0, detailsCard[1], 0, 0),
-              padding: EdgeInsets.fromLTRB(
-                  40, (detailsCard[2] == 0) ? 30 : detailsCard[2], 0, 0),
-              width: (detailsCard[0] == 0)
-                  ? MediaQuery.of(context).size.width
-                  : detailsCard[0],
-              decoration: BoxDecoration(
-                color: Color(0xff4361ee),
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(50),
-                ),
-              ),
-              child: GestureDetector(
-                child: ListView(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Event Details',
-                          style: GoogleFonts.inter(
-                            color: Color(0xffdee2ff),
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
+            GestureDetector(
+              child: Stack(
+                children: [
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 200),
+                    height: double.infinity,
+                    margin: EdgeInsets.fromLTRB(0, detailsCard[1], 0, 0),
+                    padding: EdgeInsets.fromLTRB(
+                        40, (detailsCard[2] == 0) ? 30 : detailsCard[2], 0, 0),
+                    width: (detailsCard[0] == 0)
+                        ? MediaQuery.of(context).size.width
+                        : detailsCard[0],
+                    decoration: BoxDecoration(
+                      color: Color(0xff4361ee),
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(50),
+                      ),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(top: 10, right: 30),
-                      child: Column(
-                        children: [
-                          Text(
+                  ),
+                  // GestureDetector(
+                  // child: ListView(
+                  //   shrinkWrap: true,
+                  //   physics: NeverScrollableScrollPhysics(),
+                  //   padding: EdgeInsets.zero,
+                  //   children: [
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 200),
+                    padding: EdgeInsets.only(
+                        left: 30, top: (animationStarted2) ? 118 : 480),
+                    child: Text(
+                      'Event Details',
+                      style: GoogleFonts.inter(
+                        color: Color(0xffdee2ff),
+                        fontSize: 25,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: 10, right: 30),
+                    child: Stack(
+                      children: [
+                        AnimatedContainer(
+                          duration: Duration(milliseconds: 200),
+                          padding: EdgeInsets.only(
+                              left: 30, top: (animationStarted2) ? 140 : 505),
+                          child: Text(
                             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                             style: TextStyle(
                               color: Color(0xffdee2ff),
@@ -190,28 +222,63 @@ class _EventPurchaseScreenState extends State<EventPurchaseScreen> {
                               fontWeight: FontWeight.w300,
                             ),
                           ),
-                          SizedBox(height: 20),
-                          DetailCard(),
-                          SizedBox(height: 20),
-                          DetailCard(),
-                          SizedBox(height: 20),
-                          DetailCard(),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                onPanUpdate: (details) {
-                  if (details.delta.dy > 0) {
-                    setState(() {
-                      animationStarted = false;
-                      dateCard = [0, 350, 0, 0];
-                      detailsCard = [0, 450, 0, 0];
-                      Navigator.pop(context);
-                    });
-                  }
-                },
+                        ),
+                        // SizedBox(height: 20),
+                        AnimatedContainer(
+                          duration: Duration(milliseconds: 200),
+                          padding: EdgeInsets.only(
+                              left: 30, top: (animationStarted3) ? 320 : 678),
+                          child: DetailCard(),
+                        ),
+                        AnimatedContainer(
+                          duration: Duration(milliseconds: 200),
+                          padding: EdgeInsets.only(
+                              left: 30, top: (animationStarted4) ? 460 : 818),
+                          child: ListView(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            children: [
+                              DetailCard(),
+                            ],
+                          ),
+                        ),
+                        AnimatedOpacity(
+                          opacity: (animationStarted5) ? 1 : 0,
+                          duration: Duration(milliseconds: 300),
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 200),
+                            padding: EdgeInsets.only(
+                                left: 30, top: (animationStarted5) ? 600 : 958),
+                            child: ListView(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              children: [
+                                DetailCard(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
+              onPanUpdate: (details) {
+                if (details.delta.dy > 0) {
+                  setState(() {
+                    animationStarted = false;
+                    animationStarted2 = false;
+                    animationStarted3 = false;
+                    animationStarted4 = false;
+                    animationStarted5 = false;
+                    dateCard = [0, 350, 0, 0];
+                    detailsCard = [0, 450, 0, 0];
+                    Navigator.pop(context);
+                  });
+                }
+              },
             ),
             //* Ticket Price
             AnimatedContainer(
@@ -219,22 +286,22 @@ class _EventPurchaseScreenState extends State<EventPurchaseScreen> {
               height: double.infinity,
               width: double.infinity,
               margin: EdgeInsets.fromLTRB(
-                  (!animationStarted) ? 150 : 40,
-                  (!animationStarted) ? 780 : 760,
-                  (!animationStarted) ? 0 : 30,
-                  (!animationStarted) ? 0 : 70),
-              padding: EdgeInsets.fromLTRB((!animationStarted) ? 45 : 0,
-                  (!animationStarted) ? 40 : 0, 0, 0),
+                  (!animationStarted5) ? 150 : 40,
+                  (!animationStarted5) ? 780 : 760,
+                  (!animationStarted5) ? 0 : 30,
+                  (!animationStarted5) ? 0 : 70),
+              padding: EdgeInsets.fromLTRB((!animationStarted5) ? 45 : 0,
+                  (!animationStarted5) ? 40 : 0, 0, 0),
               decoration: BoxDecoration(
                 color: Color(0xffdee2ff),
-                borderRadius: (!animationStarted)
+                borderRadius: (!animationStarted5)
                     ? BorderRadius.only(topLeft: Radius.circular(50))
                     : BorderRadius.circular(50),
               ),
               child: AnimatedAlign(
                 duration: Duration(milliseconds: 200),
                 alignment:
-                    (!animationStarted) ? Alignment.topLeft : Alignment.center,
+                    (!animationStarted5) ? Alignment.topLeft : Alignment.center,
                 child: Text(
                   'BUY • LKR 12,000',
                   style: GoogleFonts.inter(

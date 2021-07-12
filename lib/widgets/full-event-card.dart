@@ -92,7 +92,7 @@ class FullEventCard extends StatelessWidget {
                     ),
                     child: Text(
                       this.category,
-                      style: TextStyle(color: Colors.black54),
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
                 ],

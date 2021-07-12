@@ -134,6 +134,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
             ),
             //* Event Date Card
             AnimatedContainer(
+              // curve: Curves.elasticIn,
               duration: Duration(milliseconds: 200),
               height: double.infinity,
               width: double.infinity,
@@ -243,7 +244,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               duration: Duration(milliseconds: 200),
               height: double.infinity,
               margin: EdgeInsets.fromLTRB(0, detailsCard[1], 0, 0),
-              padding: EdgeInsets.fromLTRB(40, 30, 0, 0),
+              padding: EdgeInsets.fromLTRB(30, 30, 0, 0),
               width: (detailsCard[0] == 0)
                   ? MediaQuery.of(context).size.width * 0.7
                   : detailsCard[0],
@@ -264,7 +265,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       children: [
                         AnimatedCrossFade(
                           firstChild: Text(
-                            'More Details',
+                            'Event Details',
                             style: GoogleFonts.inter(
                               color: Color(0xffdee2ff),
                               fontSize: 25,
